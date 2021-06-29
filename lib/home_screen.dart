@@ -1,5 +1,6 @@
+import 'dart:ui';
+import 'package:demo_app/system.dart';
 import 'package:demo_app/widgets/app_bar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,41 +15,46 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(context: context, title: "Trang chủ"),
-      body: buildBody(),
+      body: buildBody(context),
     );
   }
 }
 
-Widget buildBody() {
-  return Container(
-    width: double.infinity,
-    height: double.infinity,
-    padding: EdgeInsets.all(8),
-    decoration: BoxDecoration(
-      gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color(0xffffc0c0),
-            Color(0xfff9fdff),
-            Color(0xfff9fdff),
-            Color(0xfff9fdff),
-            Color(0xfff9fdff),
-            Color(0xfff9fdff),
-            Color(0xfff9fdff),
-            Color(0xfff9fdff),
-          ]),
-    ),
-    child: SingleChildScrollView(
-      physics: ScrollPhysics(),
-      child: Column(
-        children: [
-          buildSearchbarAndCoint(),
-          buildElectronicWallet(),
-          buildMenus(),
-          buildHotMenus(),
-          buildBestSellingProduct(),
-        ],
+Widget buildBody(BuildContext context) {
+  return GestureDetector(
+    onTap: () => hideKeyboardAndUnFocus(context),
+    behavior: HitTestBehavior.translucent,
+    child: Container(
+      width: double.infinity,
+      height: double.infinity,
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xffffc0c0),
+              Color(0xfff9fdff),
+              Color(0xfff9fdff),
+              Color(0xfff9fdff),
+              Color(0xfff9fdff),
+              Color(0xfff9fdff),
+              Color(0xfff9fdff),
+              Color(0xfff9fdff),
+            ]),
+      ),
+      child: SingleChildScrollView(
+        physics: ScrollPhysics(),
+        child: Column(
+          children: [
+            buildSearchbarAndCoint(),
+            buildElectronicWallet(),
+            buildMenus(),
+            buildHotMenus(),
+            buildBestSellingProduct(),
+            buildListVocher(),
+          ],
+        ),
       ),
     ),
   );
@@ -291,11 +297,19 @@ Widget buildHotMenus() {
   return Column(
     mainAxisAlignment: MainAxisAlignment.start,
     children: [
-      Text("Đừng bỏ lỡ", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),),
+      Container(
+          padding: const EdgeInsets.only(left: 16),
+          width: double.infinity,
+          child: Text(
+            "Đừng bỏ lỡ",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+            ),
+          )),
       GridView.builder(
-        gridDelegate:
-        SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,
-        childAspectRatio: widthItem/heightItem),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, childAspectRatio: widthItem / heightItem),
         itemBuilder: (ctx, index) {
           return buildHotMenuItem(withItem: widthItem, heightItem: heightItem);
         },
@@ -307,7 +321,8 @@ Widget buildHotMenus() {
   );
 }
 
-Widget buildHotMenuItem({required double withItem, required double heightItem}) {
+Widget buildHotMenuItem(
+    {required double withItem, required double heightItem}) {
   return Container(
     margin: const EdgeInsets.all(8),
     width: withItem,
@@ -363,7 +378,7 @@ Widget buildHotMenuItem({required double withItem, required double heightItem}) 
   );
 }
 
-Widget buildBestSellingProduct(){
+Widget buildBestSellingProduct() {
   return Container(
     margin: const EdgeInsets.only(top: 16),
     decoration: BoxDecoration(
@@ -388,8 +403,7 @@ Widget buildBestSellingProduct(){
   );
 }
 
-
-Widget buildHeaderBestSellingProduct(){
+Widget buildHeaderBestSellingProduct() {
   return Row(
     children: [
       Container(
@@ -399,22 +413,28 @@ Widget buildHeaderBestSellingProduct(){
           borderRadius: BorderRadius.circular(20),
           color: Color(0xfff6f6f6),
         ),
-        child: Icon(Icons.shopping_cart_rounded, color: Colors.orangeAccent,),
+        child: Icon(
+          Icons.shopping_cart_rounded,
+          color: Colors.orangeAccent,
+        ),
       ),
       Container(
         margin: const EdgeInsets.only(left: 16),
-        child: RichText(text: TextSpan(
-            children: [
-              TextSpan(text: "Sản phẩm bán chạy nhất\n", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-              TextSpan(text: "Lựa chọn hàng đầu dành cho bạn", style: TextStyle(fontSize: 16)),
-            ]
-        )),
+        child: RichText(
+            text: TextSpan(children: [
+          TextSpan(
+              text: "Sản phẩm bán chạy nhất\n",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          TextSpan(
+              text: "Lựa chọn hàng đầu dành cho bạn",
+              style: TextStyle(fontSize: 16)),
+        ])),
       )
     ],
   );
 }
 
-Widget buildContentBestSellingProduct(){
+Widget buildContentBestSellingProduct() {
   return Container(
     padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(
@@ -425,7 +445,7 @@ Widget buildContentBestSellingProduct(){
   );
 }
 
-Widget buildListItemBestSellingProduct(){
+Widget buildListItemBestSellingProduct() {
   return Container(
     height: 180,
     child: ListView.builder(
@@ -441,17 +461,107 @@ Widget buildListItemBestSellingProduct(){
   );
 }
 
-Widget buildItemBestSellingProduct({int index = 0}){
+Widget buildItemBestSellingProduct({int index = 0}) {
   return Container(
     width: 128,
     child: Column(
       children: [
-        Image(image: AssetImage("assets/banner_hotsell_1.jpg"), fit: BoxFit.fill),
+        Image(
+            image: AssetImage("assets/banner_hotsell_1.jpg"), fit: BoxFit.fill),
         Text("Rau muống"),
         Visibility(
             visible: index == 0,
-            child: Text("50 000đ", style: TextStyle(color: Colors.black87, decoration: TextDecoration.lineThrough),)),
-        Text("10 000đ", style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+            child: Text(
+              "50 000đ",
+              style: TextStyle(
+                  color: Colors.black87,
+                  decoration: TextDecoration.lineThrough),
+            )),
+        Text("10 000đ",
+            style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+      ],
+    ),
+  );
+}
+
+Widget buildListVocher() {
+  return Container(
+    margin: const EdgeInsets.all(16),
+    height: 250,
+    child: ListView.builder(
+      primary: false,
+      // physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: 8,
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (BuildContext context, int index) {
+        return buildItemVocher(index: index);
+      },
+    ),
+  );
+}
+
+Widget buildItemVocher({int index = 0}) {
+  return Container(
+    width: 250,
+    margin: const EdgeInsets.only(right: 16, bottom: 16),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(20),
+      color: Colors.white,
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.7),
+          spreadRadius: 1,
+          blurRadius: 7,
+          offset: Offset(0, 3), // changes position of shadow
+        ),
+      ],
+    ),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        ClipRRect(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+            child: Image.asset(
+              "assets/banner_hot_sell.jpg",
+              fit: BoxFit.fill,
+            )),
+        Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(8),
+            child: Text(
+              "LAZADA",
+              style: TextStyle(
+                  color: Colors.black26,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16),
+            )),
+        Container(
+            width: double.infinity,
+            padding: const EdgeInsets.only(left: 8, bottom: 8),
+            child: Text(
+              "Giảm ngay 15,000 đ",
+              style: TextStyle(
+                  color: Colors.black87,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16),
+            )),
+        Container(
+            width: double.infinity,
+            padding: const EdgeInsets.only(left: 8, bottom: 8),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.shopping_cart_rounded,
+                  color: Color(0xFF2f6bff),
+                ),
+                Text(
+                  "100 điểm",
+                  style: TextStyle(color: Color(0xFF2f6bff), fontSize: 16),
+                )
+              ],
+            )),
       ],
     ),
   );
