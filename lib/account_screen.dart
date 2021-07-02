@@ -1,4 +1,3 @@
-import 'package:demo_app/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -13,25 +12,26 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(context: context, title: "Tài khoản"),
       body: buildBody(),
     );
   }
 
   Widget buildBody() {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      padding: EdgeInsets.only(top: 8, bottom: 8),
-      color: Colors.black12,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            buildProfile(),
-            SizedBox(height: 8),
-            buildListMenu(),
-            buildRate()
-          ],
+    return SafeArea(
+      child: Container(
+        width: double.infinity,
+        height: double.infinity,
+        padding: EdgeInsets.only(top: 8, bottom: 8),
+        color: Colors.black12,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              buildProfile(),
+              SizedBox(height: 8),
+              buildListMenu(),
+              buildRate()
+            ],
+          ),
         ),
       ),
     );

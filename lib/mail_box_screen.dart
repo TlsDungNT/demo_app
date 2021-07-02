@@ -1,4 +1,3 @@
-import 'package:demo_app/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -14,25 +13,26 @@ class _MailBoxScreenState extends State<MailBoxScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(context: context, title: "Hòm thư"),
       body: buildBody(),
     );
   }
 
   Widget buildBody() {
-    return ListView.separated(
-      itemCount: 3,
-      separatorBuilder: (BuildContext context, int index) => const Divider(),
-      itemBuilder: (BuildContext context, int index) {
-        return buildListMailBox(
-            index: index,
-            iconAvatar: Icons.alarm,
-            backgroundAvatar: Colors.green,
-            titleMsg: "Thông báo",
-            contentMsg:
-                "Cập nhật thông tin giao dịch hoàn thành",
-            dateMsg: "26/06/2021");
-      },
+    return SafeArea(
+      child: ListView.separated(
+        itemCount: 3,
+        separatorBuilder: (BuildContext context, int index) => const Divider(),
+        itemBuilder: (BuildContext context, int index) {
+          return buildListMailBox(
+              index: index,
+              iconAvatar: Icons.alarm,
+              backgroundAvatar: Colors.green,
+              titleMsg: "Thông báo",
+              contentMsg:
+                  "Cập nhật thông tin giao dịch hoàn thành",
+              dateMsg: "26/06/2021");
+        },
+      ),
     );
   }
 

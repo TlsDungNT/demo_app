@@ -1,7 +1,4 @@
-import 'package:demo_app/account_screen.dart';
-import 'package:demo_app/home_screen.dart';
-import 'package:demo_app/login.dart';
-import 'package:demo_app/mail_box_screen.dart';
+import 'package:demo_app/widgets/app_admin.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -29,7 +26,8 @@ class MyApp extends StatelessWidget {
       // home: LoginScreen(),
       // home: MailBoxScreen(),
       // home: AccountScreen(),
-      home: HomeScreen(),
+      // home: HomeScreen(),
+      home: AppAdmin(),
     );
   }
 }

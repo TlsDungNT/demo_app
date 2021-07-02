@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:demo_app/system.dart';
 import 'package:demo_app/utilities/color.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
